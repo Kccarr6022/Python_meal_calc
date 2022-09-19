@@ -30,7 +30,7 @@ def get_order():
 
     script = "Items for sale:\n\n"
     for item in items:
-        script += item + " - " + str(items[item]) + "\n"
+        script += item + " - " + "${:,.2f}".format(items[item]) + "\n"
 
     print(script)
 
@@ -51,18 +51,18 @@ def get_order():
 def print_order(orders):
     print("Your orders include: \n")
     for item in orders:
-        print(item + " - " + str(orders[item]) + "\n")
+        print(item + " - " + "${:,.2f}".format(orders[item]) + "\n")
     total = 0
     for item in orders.values():
         total += item
-    print("total: " + str(total))
+    print("total: " + "${:,.2f}".format(total))
 
 def get_tip(orders):
     print_order(orders)
     total = 0
     for item in orders.values():
         total += item
-    print("Your total is: " + str(total) + ", the suggested tip is " + str(total * 0.06))
+    print("Your total is: " + "${:,.2f}".format(total) + ", the suggested tip would is " + "${:,.2f}".format(total * 0.15))
     tip = 0
     while tip == 0:
         tip = float(input("How much would you like to tip? "))
@@ -93,7 +93,9 @@ def main():
         else:
             print_order(orders)
             tip = get_tip(orders)
-            print("Thank you for your order! Your tip is " + str(tip))
+            print("Thank you for your order! Your tip is " \
+                + "${:,.2f}".format(tip) + " and your total is " \
+                     + "${:,.2f}".format(tip + sum(orders.values())))
     else:
         print("Must enter " + letter + " to continue.")
         exit()
