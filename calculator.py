@@ -51,18 +51,18 @@ def get_order():
 def print_order(orders):
     print("Your orders include: \n")
     for item in orders:
-        print(item + " - " + "${:,.2f}".format(orders[item]) + "\n")
+        print(item[0] + " - " + "${:,.2f}".format(item[1]) + "\n")
     total = 0
-    for item in orders.values():
-        total += item
+    for item in orders:
+        total += item[1]
     print("total: " + "${:,.2f}".format(total))
 
 def get_tip(orders):
     print_order(orders)
     total = 0
-    for item in orders.values():
-        total += item
-    print("Your total is: " + "${:,.2f}".format(total) + ", the suggested tip would is " + "${:,.2f}".format(total * 0.15))
+    for item in orders:
+        total += item[1]
+    print("Your total is: " + "${:,.2f}".format(total) + ", the suggested tip would be " + "${:,.2f}".format(total * 0.15))
     tip = 0
     while tip == 0:
         tip = float(input("How much would you like to tip? "))
@@ -80,22 +80,25 @@ def get_tip(orders):
 def main():
     phrase = "Would you like to order something? (y/n) "
     letter = "y" # letter to exit
-    orders = {}
+    orders = []
 
     if check_exit(letter, phrase):
         order = get_order()
-        orders[order[0]] = order[1]
+        orders.append(order)
         print_order(orders)
         while (check_exit(letter, phrase)):
             order = get_order()
-            orders[order[0]] = order[1]
+            orders.append(order)
             print_order(orders)
         else:
             print_order(orders)
             tip = get_tip(orders)
+            total = 0
+            for item in orders:
+                total += item[1]
             print("Thank you for your order! Your tip is " \
                 + "${:,.2f}".format(tip) + " and your total is " \
-                     + "${:,.2f}".format(tip + sum(orders.values())))
+                     + "${:,.2f}".format(tip + total))
     else:
         print("Must enter " + letter + " to continue.")
         exit()
