@@ -14,10 +14,27 @@ items = {
 }
 
 def lowercase_letters(string):
+    """Converts all letters in a string to lowercase.
+
+    Args:
+        string (string): The input of the string you want to convert.
+
+    Returns:
+        string: returns the string with all letters converted to lowercase.
+    """
     return re.sub('[^a-z]', '', string)
 
 
 def check_exit(letter, phrase):
+    """Checks if the user wants to exit the program.
+
+    Args:
+        letter (string): The letter that the user must enter to continue.
+        phrase (string): The phrase that is printed to the user.
+
+    Returns:
+        boolean: returns True if the user enters the letter, False if not.
+    """
     print(phrase)
     user_input = input()
     if user_input.startswith(letter):
@@ -26,6 +43,11 @@ def check_exit(letter, phrase):
         return False
 
 def get_order():
+    """Gets the order from the user.
+
+    Returns:
+        list: returns the order from the user.
+    """
     order = ["", 0]
 
     script = "Items for sale:\n\n"
@@ -49,6 +71,11 @@ def get_order():
     return order
 
 def print_order(orders):
+    """Prints the order to the user.
+
+    Args:
+        orders (list): The list of orders.
+    """
     print("Your orders include: \n")
     for item in orders:
         print(item[0] + " - " + "${:,.2f}".format(item[1]) + "\n")
@@ -58,6 +85,12 @@ def print_order(orders):
     print("total: " + "${:,.2f}".format(total))
 
 def get_tip(orders):
+    """Gets the tip from the user.
+    
+    Args: orders (list): The list of orders.
+    
+    Returns: float: The tip from the user.
+    """
     print_order(orders)
     total = 0
     for item in orders:
@@ -97,8 +130,8 @@ def main():
             for item in orders:
                 total += item[1]
             print("Thank you for your order! Your tip is " \
-                + "${:,.2f}".format(tip) + " and your total is " \
-                     + "${:,.2f}".format(tip + total))
+                + "${:,.2f}".format(float(tip)) + " and your total is " \
+                     + "${:,.2f}".format(float(tip) + total))
     else:
         print("Must enter " + letter + " to continue.")
         exit()
